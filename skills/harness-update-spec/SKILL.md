@@ -75,13 +75,18 @@ When updating:
 
 ## Content Routing
 
-Reuse the same content-routing rules as `harness-init`:
+Reuse the same content-routing rules as `harness-init`. The table below shows common mappings — create or update the file that best matches the category, but do not fabricate files for changes that don't produce high-signal content:
 
-- Project identity goes to `index/project-profile.md`.
-- Data flow and external runtime semantics go to `guides/backend.md`.
-- High-risk chains and boundaries go to `rules/architecture.md`.
-- Decisions and tradeoffs go to `decisions/`.
-- Historical pitfalls, regressions, and patterns go to `memory/`.
+| Change type | Category |
+| --- | --- |
+| Dependency or runtime identity changes | `index/` |
+| Module structure changes | `index/` |
+| New services, consumers, producers, RPC or message flows | `guides/` |
+| New runtime semantics or state machines | `domain/` |
+| Architecture boundary changes | `rules/` |
+| New design tradeoffs or ADR-worthy decisions | `decisions/` |
+| New domain terms or business rules | `domain/` |
+| New pitfalls, regressions, or reusable patterns | `memory/` |
 
 ## Language
 

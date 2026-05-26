@@ -17,7 +17,7 @@ Use this skill when the user wants to initialize a project's `.harness/` directo
 
 ## Target Directory Structure
 
-Create this structure under `.harness/`:
+Create the `.harness/` directory with the category layout below. The listed files are **examples** — after exploring the codebase, create only the files that actually contain high-signal knowledge for that category. Do not create empty or placeholder files.
 
 ```text
 .harness/
@@ -25,33 +25,29 @@ Create this structure under `.harness/`:
 ├── index/
 │   ├── routing.md
 │   ├── priority.md
-│   ├── module-map.md
-│   └── project-profile.md
+│   └── ...          # additional index files (e.g. module-map.md, project-profile.md)
 ├── rules/
-│   ├── architecture.md
-│   ├── coding.md
-│   ├── testing.md
-│   └── security.md
+│   └── ...          # architecture, coding, testing, security, or other convention files
 ├── domain/
-│   ├── glossary.md
-│   ├── business-rules.md
-│   └── runtime-semantics.md
+│   └── ...          # glossary, business-rules, runtime-semantics, or other domain files
 ├── decisions/
 │   ├── adr/
-│   └── tradeoffs.md
+│   └── ...          # tradeoffs, ADRs, and other design records
 ├── guides/
-│   ├── backend.md
-│   └── ops.md
+│   └── ...          # backend flows, ops runbooks, integration notes
 ├── memory/
-│   ├── pitfalls.md
-│   ├── regressions.md
-│   ├── patterns.md
-│   └── lessons.md
+│   └── ...          # pitfalls, regressions, patterns, lessons
 └── human-docs/
-    ├── onboarding.html
-    ├── architecture-intro.html
-    └── operation-manual.html
+    └── ...          # onboarding, architecture intro, operation manuals (HTML)
 ```
+
+### README.md content
+
+`.harness/README.md` must explain how to use this directory:
+
+- **Injection routing**: Look up which `.harness/` file to read for a given task in `index/routing.md`.
+- **Injection priority**: Look up the priority and intensity of context injection in `index/priority.md`.
+- List the categories present and briefly what each covers.
 
 ## Content Routing
 
@@ -94,7 +90,8 @@ Before generating any content, determine the output language:
 ## Execution
 
 1. Explore the repository thoroughly and base all outputs on the current branch state.
-2. Create the full `.harness/` tree, even if some files are initially brief.
-3. Keep generated content concise and high-signal.
-4. If `human-docs/` content is needed, write Markdown first, then use `md-to-html-doc` to produce HTML.
-5. Verify the final `.harness/` tree is complete.
+2. Create the `.harness/` directory and populate files according to the category structure above. Only create a file when the codebase has high-signal content for that category; skip empty or placeholder files.
+3. Ensure `index/routing.md` and `index/priority.md` are always created, and that `README.md` references them as the lookup targets for injection routing and priority.
+4. Keep generated content concise and high-signal.
+5. If `human-docs/` content is needed, write Markdown first, then use `md-to-html-doc` to produce HTML.
+6. Verify the final `.harness/` tree is coherent — all referenced files exist and no file is empty.
