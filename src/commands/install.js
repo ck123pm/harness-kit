@@ -25,7 +25,7 @@ export default async function installAction(options) {
   await ensureClaudeDirs(claudeDir);
 
   // Step 2: Copy files
-  console.log(chalk.bold('Installing commands and skills:'));
+  console.log(chalk.bold('Installing skills:'));
   const fileResults = [];
 
   for (const mapping of FILE_MAPPINGS) {
@@ -113,5 +113,5 @@ export default async function installAction(options) {
   // Step 6: Summary
   console.log(chalk.bold.green('\n✅ Installation complete!\n'));
   console.log('Next step:');
-  console.log(chalk.cyan('  Open Claude and run /harness-init to initialize your project\n'));
+  console.log(chalk.cyan('  Open Claude and ask it to use the harness-init skill to initialize your project\n'));
 }

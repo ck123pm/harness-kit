@@ -12,19 +12,19 @@ export default async function doctorAction() {
 
   const checks = [];
 
-  // Check 1: Claude command harness-init (check both scopes)
-  let cmdPath = null;
-  const globalCmd = resolveTargetPath('commands/harness-init.md', 'global');
-  const localCmd = resolveTargetPath('commands/harness-init.md', 'local');
-  if (await fs.pathExists(globalCmd)) {
-    cmdPath = globalCmd;
-  } else if (await fs.pathExists(localCmd)) {
-    cmdPath = localCmd;
+  // Check 1: Claude skill harness-init (check both scopes)
+  let initSkillPath = null;
+  const globalInitSkill = resolveTargetPath('skills/harness-init/SKILL.md', 'global');
+  const localInitSkill = resolveTargetPath('skills/harness-init/SKILL.md', 'local');
+  if (await fs.pathExists(globalInitSkill)) {
+    initSkillPath = globalInitSkill;
+  } else if (await fs.pathExists(localInitSkill)) {
+    initSkillPath = localInitSkill;
   }
   checks.push({
-    label: 'Claude command harness-init',
-    status: cmdPath ? 'ok' : 'fail',
-    detail: cmdPath ? `Found at ${cmdPath}` : 'Not installed',
+    label: 'Claude skill harness-init',
+    status: initSkillPath ? 'ok' : 'fail',
+    detail: initSkillPath ? `Found at ${initSkillPath}` : 'Not installed',
     fix: 'Run: harness-kit install',
   });
 
@@ -44,19 +44,19 @@ export default async function doctorAction() {
     fix: 'Run: harness-kit install',
   });
 
-  // Check 3: Claude command harness-update-spec (check both scopes)
-  let updateSpecPath = null;
-  const globalUpdateSpec = resolveTargetPath('commands/harness-update-spec.md', 'global');
-  const localUpdateSpec = resolveTargetPath('commands/harness-update-spec.md', 'local');
-  if (await fs.pathExists(globalUpdateSpec)) {
-    updateSpecPath = globalUpdateSpec;
-  } else if (await fs.pathExists(localUpdateSpec)) {
-    updateSpecPath = localUpdateSpec;
+  // Check 3: Claude skill harness-update-spec (check both scopes)
+  let updateSpecSkillPath = null;
+  const globalUpdateSpecSkill = resolveTargetPath('skills/harness-update-spec/SKILL.md', 'global');
+  const localUpdateSpecSkill = resolveTargetPath('skills/harness-update-spec/SKILL.md', 'local');
+  if (await fs.pathExists(globalUpdateSpecSkill)) {
+    updateSpecSkillPath = globalUpdateSpecSkill;
+  } else if (await fs.pathExists(localUpdateSpecSkill)) {
+    updateSpecSkillPath = localUpdateSpecSkill;
   }
   checks.push({
-    label: 'Claude command harness-update-spec',
-    status: updateSpecPath ? 'ok' : 'fail',
-    detail: updateSpecPath ? `Found at ${updateSpecPath}` : 'Not installed',
+    label: 'Claude skill harness-update-spec',
+    status: updateSpecSkillPath ? 'ok' : 'fail',
+    detail: updateSpecSkillPath ? `Found at ${updateSpecSkillPath}` : 'Not installed',
     fix: 'Run: harness-kit install',
   });
 
@@ -109,7 +109,7 @@ export default async function doctorAction() {
     label: '.harness/',
     status: harnessExists ? 'ok' : 'fail',
     detail: harnessExists ? 'Project initialized' : 'Not found',
-    fix: 'Run: /harness-init in Claude',
+    fix: 'Ask Claude to use the harness-init skill',
   });
 
   // Check 8: .comet.yaml
@@ -119,7 +119,7 @@ export default async function doctorAction() {
     label: '.comet.yaml',
     status: cometYamlExists ? 'ok' : 'fail',
     detail: cometYamlExists ? 'Found' : 'Not found',
-    fix: 'Run: /harness-init in Claude or comet init',
+    fix: 'Ask Claude to use the harness-init skill or run comet init',
   });
 
   // Check 8: openspec/

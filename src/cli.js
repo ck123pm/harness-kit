@@ -15,7 +15,7 @@ program
 
 program
   .command('install')
-  .description('Install harness-init command and md-to-html-doc skill to Claude')
+  .description('Install harness skills into Claude')
   .option('--scope <scope>', 'Installation scope: global or local', 'global')
   .option('--skip-comet', 'Skip @ck123pm/comet installation')
   .option('--skip-openspec', 'Skip @fission-ai/openspec installation')
@@ -39,7 +39,7 @@ program
 
 program
   .command('update')
-  .description('Update installed command/skill files')
+  .description('Update installed skill files')
   .option('--check', 'Check for updates without installing')
   .option('--force', 'Force overwrite without prompting')
   .action(async (options) => {
@@ -49,7 +49,7 @@ program
 
 program
   .command('uninstall')
-  .description('Remove installed command/skill files')
+  .description('Remove installed skill files')
   .action(async () => {
     const { default: action } = await import('./commands/uninstall.js');
     await action();

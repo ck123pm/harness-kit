@@ -10,12 +10,12 @@ export const PACKAGE_ROOT = path.resolve(__dirname, '..', '..');
 
 export const FILE_MAPPINGS = [
   {
-    source: 'commands/harness-init.md',
-    target: 'commands/harness-init.md',
+    source: 'skills/harness-init',
+    target: 'skills/harness-init',
   },
   {
-    source: 'commands/harness-update-spec.md',
-    target: 'commands/harness-update-spec.md',
+    source: 'skills/harness-update-spec',
+    target: 'skills/harness-update-spec',
   },
   {
     source: 'skills/md-to-html-doc.md',
@@ -33,8 +33,52 @@ export function resolveTargetPath(relativeTarget, scope = 'global') {
 }
 
 export async function hashFile(filePath) {
+  const stat = await fs.stat(filePath);
+
+  if (stat.isDirectory()) {
+    const hash = createHash('sha256');
+    await hashDirectoryInto(hash, filePath, filePath);
+    return hash.digest('hex').slice(0, 12);
+  }
+
   const content = await fs.readFile(filePath);
   return createHash('sha256').update(content).digest('hex').slice(0, 12);
+}
+
+async function hashDirectoryInto(hash, rootDir, currentDir) {
+  const entries = await fs.readdir(currentDir);
+  entries.sort();
+
+  for (const entry of entries) {
+    const fullPath = path.join(currentDir, entry);
+    const stat = await fs.stat(fullPath);
+    const relativePath = path.relative(rootDir, fullPath).replaceAll('\\', '/');
+
+    hash.update(relativePath);
+    hash.update(stat.isDirectory() ? 'dir' : 'file');
+
+    if (stat.isDirectory()) {
+      await hashDirectoryInto(hash, rootDir, fullPath);
+      continue;
+    }
+
+    const content = await fs.readFile(fullPath);
+    hash.update(content);
+  }
+}
+
+async function getPathSize(targetPath) {
+  const stat = await fs.stat(targetPath);
+  if (stat.isFile()) {
+    return stat.size;
+  }
+
+  let total = 0;
+  const entries = await fs.readdir(targetPath);
+  for (const entry of entries) {
+    total += await getPathSize(path.join(targetPath, entry));
+  }
+  return total;
 }
 
 export function getRecordPath(scope = 'global') {
@@ -72,13 +116,12 @@ export async function copyFileRecord(sourceRel, targetRel, { force = false, scop
   await ensureClaudeDirs(claudeDir);
   await fs.copy(src, tgt, { overwrite: true });
   const hash = await hashFile(tgt);
-  const stat = await fs.stat(tgt);
 
   return {
     target: tgt,
     didUpdate: true,
     hash,
-    size: stat.size,
+    size: await getPathSize(tgt),
   };
 }
 
