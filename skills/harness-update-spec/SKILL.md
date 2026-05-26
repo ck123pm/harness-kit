@@ -1,6 +1,6 @@
 ---
 name: harness-update-spec
-description: Analyze an existing project's .harness/ specs against the current codebase, identify incremental updates or missing specs, and propose focused changes without regenerating everything from scratch.
+description: Analyze and incrementally update an existing project's .harness/ specs against the current codebase. Use when the codebase has changed and .harness/ content may be stale, or when the user wants to check spec freshness.
 ---
 
 # Harness Update Spec
@@ -41,7 +41,7 @@ Prefer CodeGraph when it is available.
 
 ### 3. Derive a diff matrix
 
-Map detected changes to spec targets:
+Map detected changes to spec targets. These are reference mappings — create new files when the change doesn't fit an existing one.
 
 | Change type | Likely spec target |
 | --- | --- |
@@ -72,21 +72,6 @@ When updating:
 2. Append to history-oriented files when that better preserves context.
 3. Keep internal references inside `.harness/` consistent after edits.
 4. Re-run a quick file list check to ensure the directory remains coherent.
-
-## Content Routing
-
-Reuse the same content-routing rules as `harness-init`. The table below shows common mappings — create or update the file that best matches the category, but do not fabricate files for changes that don't produce high-signal content:
-
-| Change type | Category |
-| --- | --- |
-| Dependency or runtime identity changes | `index/` |
-| Module structure changes | `index/` |
-| New services, consumers, producers, RPC or message flows | `guides/` |
-| New runtime semantics or state machines | `domain/` |
-| Architecture boundary changes | `rules/` |
-| New design tradeoffs or ADR-worthy decisions | `decisions/` |
-| New domain terms or business rules | `domain/` |
-| New pitfalls, regressions, or reusable patterns | `memory/` |
 
 ## Language
 
