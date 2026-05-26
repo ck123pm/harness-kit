@@ -1,0 +1,35 @@
+{
+  "name": "@ck123pm/harness-kit",
+  "version": "0.1.0",
+  "description": "CLI for installing and managing Claude Code harness capabilities",
+  "type": "module",
+  "bin": {
+    "harness-kit": "bin/harness-kit.js"
+  },
+  "scripts": {
+    "start": "node bin/harness-kit.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^14.0.0",
+    "fs-extra": "^11.2.0"
+  },
+  "peerDependencies": {
+    "@ck123pm/comet": ">=0.2.0",
+    "@fission-ai/openspec": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@ck123pm/comet": {
+      "optional": true
+    },
+    "@fission-ai/openspec": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
