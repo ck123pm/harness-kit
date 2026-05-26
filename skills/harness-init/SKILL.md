@@ -1,6 +1,6 @@
 ---
 name: harness-init
-description: Initialize a project's .harness/ directory from the real codebase. Use when starting a new project, setting up context injection for the first time, or rebuilding stale .harness/ content.
+description: Initialize a project's .harness/ directory by exploring the real codebase and generating structured project knowledge docs. Use when starting harness for a new project or rebuilding stale .harness/ content.
 ---
 
 # Harness Init
