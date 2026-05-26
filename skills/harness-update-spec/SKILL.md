@@ -71,7 +71,8 @@ When updating:
 1. Do not rewrite correct existing content without reason.
 2. Append to history-oriented files when that better preserves context.
 3. Keep internal references inside `.harness/` consistent after edits.
-4. Re-run a quick file list check to ensure the directory remains coherent.
+4. If `README.md` deviates from the harness-init bundled template, regenerate it to match.
+5. Re-run a quick file list check to ensure the directory remains coherent.
 
 ## Language
 
@@ -81,6 +82,6 @@ Before generating or updating any content, determine the output language using t
 2. If no preference is found, match the language of the current conversation.
 3. All generated files in `.harness/` must use the same language consistently and match the language of existing `.harness/` files.
 
-## Human Docs
+## Wiki
 
-If you add or refresh `human-docs/` content, write Markdown first and then use `md-to-html-doc` to produce the HTML artifacts expected by the harness.
+When adding or updating wiki content, write Markdown in `templates/wiki/`, convert to HTML with `md-to-html-doc`, place HTML in `.harness/wiki/`.

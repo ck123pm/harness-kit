@@ -5,14 +5,12 @@ description: Initialize a project's .harness/ directory by exploring the real co
 
 # Harness Init
 
-Use this skill when the user wants to initialize a project's `.harness/` directory from the current codebase state.
-
 ## Core Principles
 
 1. Do not record what the AI can cheaply derive from source code.
 2. Split expensive-to-derive knowledge by type and place it in the right file.
 3. Put design decisions, historical reasons, and tradeoffs into `decisions/`.
-4. Put human-oriented docs in `human-docs/` as Markdown first, convert them to HTML with `md-to-html-doc`, then remove the Markdown source if the workflow requires generated HTML only.
+4. Put human-oriented docs in `wiki/` — write Markdown in `templates/wiki/`, convert to HTML with `md-to-html-doc`, place HTML in `.harness/wiki/`, remove Markdown source if workflow requires HTML only.
 5. Never fabricate content that is not supported by the actual repository state.
 
 ## Directory Structure and Content Routing
@@ -21,7 +19,7 @@ The `.harness/` directory uses a category-based layout. The reference files belo
 
 ```text
 .harness/
-├── README.md           # always create: explain injection routing via index/routing.md and priority via index/priority.md
+├── README.md           # always create: use templates/harness-readme.md
 ├── index/
 │   ├── routing.md      # always create
 │   ├── priority.md     # always create
@@ -47,8 +45,13 @@ The `.harness/` directory uses a category-based layout. The reference files belo
 │   ├── regressions.md
 │   ├── patterns.md
 │   └── lessons.md
-└── human-docs/
-    └── ...             # onboarding.html, architecture-intro.html, operation-manual.html
+└── wiki/                # always create as HTML via templates/wiki/
+    ├── overview/
+    ├── architecture/
+    ├── business/
+    ├── onboarding/
+    ├── decisions/
+    └── pitfalls/
 ```
 
 | Information type | Reference file |
@@ -68,6 +71,17 @@ The `.harness/` directory uses a category-based layout. The reference files belo
 | Build, config, monitoring, troubleshooting | `guides/ops.md` |
 | ADRs, design tradeoffs | `decisions/` |
 | Pitfalls, regressions, patterns, lessons | `memory/` |
+
+## README Template
+
+`.harness/README.md` must follow the template bundled at `templates/harness-readme.md` in this skill. Fill in all `<!-- -->` placeholders based on actual project state:
+
+- **Project**: name, tech stack, one-line description.
+- **Injection Routing**: always present, reference `index/routing.md`.
+- **Injection Priority**: always present, reference `index/priority.md`.
+- **Language**: set to the language used across all `.harness/` files.
+
+Do not restructure the template or add arbitrary sections — the README is a structured index consumed by the comet injection system.
 
 ## Exploration Strategy
 
