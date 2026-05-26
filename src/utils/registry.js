@@ -14,6 +14,10 @@ export const FILE_MAPPINGS = [
     target: 'commands/harness-init.md',
   },
   {
+    source: 'commands/harness-update-spec.md',
+    target: 'commands/harness-update-spec.md',
+  },
+  {
     source: 'skills/md-to-html-doc.md',
     target: 'skills/md-to-html-doc.md',
   },

@@ -44,7 +44,23 @@ export default async function doctorAction() {
     fix: 'Run: harness-kit install',
   });
 
-  // Check 3: harness-kit install record (check both scopes)
+  // Check 3: Claude command harness-update-spec (check both scopes)
+  let updateSpecPath = null;
+  const globalUpdateSpec = resolveTargetPath('commands/harness-update-spec.md', 'global');
+  const localUpdateSpec = resolveTargetPath('commands/harness-update-spec.md', 'local');
+  if (await fs.pathExists(globalUpdateSpec)) {
+    updateSpecPath = globalUpdateSpec;
+  } else if (await fs.pathExists(localUpdateSpec)) {
+    updateSpecPath = localUpdateSpec;
+  }
+  checks.push({
+    label: 'Claude command harness-update-spec',
+    status: updateSpecPath ? 'ok' : 'fail',
+    detail: updateSpecPath ? `Found at ${updateSpecPath}` : 'Not installed',
+    fix: 'Run: harness-kit install',
+  });
+
+  // Check 4: harness-kit install record (check both scopes)
   let recordPath = null;
   const gr = await getRecordPath('global');
   const lr = await getRecordPath('local');
