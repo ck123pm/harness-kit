@@ -83,6 +83,14 @@ Reuse the same content-routing rules as `harness-init`:
 - Decisions and tradeoffs go to `decisions/`.
 - Historical pitfalls, regressions, and patterns go to `memory/`.
 
+## Language
+
+Before generating or updating any content, determine the output language using the same rules as `harness-init`:
+
+1. Read the project's `CLAUDE.md` (or `.claude/CLAUDE.md`) if it exists. If it declares a language preference, follow that.
+2. If no preference is found, match the language of the current conversation.
+3. All generated files in `.harness/` must use the same language consistently and match the language of existing `.harness/` files.
+
 ## Human Docs
 
 If you add or refresh `human-docs/` content, write Markdown first and then use `md-to-html-doc` to produce the HTML artifacts expected by the harness.

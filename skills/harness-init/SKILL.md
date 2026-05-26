@@ -83,6 +83,14 @@ Before writing files, inspect the repository in at least three passes:
 
 Prefer CodeGraph when it is available. Use local search only when you need literal text or filesystem details.
 
+## Language
+
+Before generating any content, determine the output language:
+
+1. Read the project's `CLAUDE.md` (or `.claude/CLAUDE.md`) if it exists. If it declares a language preference (e.g. `language: zh-CN`, "使用中文", "write in English"), follow that.
+2. If no language preference is found, match the language of the current conversation.
+3. All generated files in `.harness/` must use the same language consistently.
+
 ## Execution
 
 1. Explore the repository thoroughly and base all outputs on the current branch state.
