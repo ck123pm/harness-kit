@@ -88,7 +88,7 @@ export async function detectGlobalCommand(binName) {
   const exec = promisify(execFile);
 
   try {
-    const { stdout } = await exec(binName, ['--version']);
+    const { stdout } = await exec(binName, ['--version'], { shell: true });
     return { available: true, version: stdout.trim() };
   } catch {
     return { available: false, version: null };
@@ -100,7 +100,7 @@ export async function installGlobalPackage(packageName) {
   const { promisify } = await import('node:util');
   const exec = promisify(execFile);
 
-  await exec('npm', ['install', '-g', packageName], { stdio: 'inherit' });
+  await exec('npm', ['install', '-g', packageName], { shell: true });
 }
 
 export async function getPackageVersion() {
