@@ -1,4 +1,4 @@
-# wiki/ Template Directory
+# wiki/ Directory Structure Reference
 
 All wiki files are HTML generated from Markdown by `md-to-html-doc`. Create Markdown first in the template dir below, then convert.
 
