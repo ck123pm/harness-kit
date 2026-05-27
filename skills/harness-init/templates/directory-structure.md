@@ -6,8 +6,8 @@ The `.harness/` directory uses a category-based layout. Reference files below ar
 .harness/
 ├── README.md           # always create: use templates/harness-readme.md
 ├── index/
-│   ├── routing.md      # always create
-│   ├── priority.md     # always create
+│   ├── routing.md      # always create: Task / phase / module / tech-domain context routing
+│   ├── priority.md     # always create: Injection priority, intensity, conflict resolution
 │   ├── module-map.md
 │   └── project-profile.md
 ├── rules/
@@ -26,6 +26,7 @@ The `.harness/` directory uses a category-based layout. Reference files below ar
 │   ├── backend.md
 │   └── ops.md
 ├── memory/
+│   ├── index.md        # always create: lightweight index of all memory files (prevents context bloat)
 │   ├── pitfalls.md
 │   ├── regressions.md
 │   ├── patterns.md
@@ -42,8 +43,8 @@ The `.harness/` directory uses a category-based layout. Reference files below ar
 | Information type | Reference file |
 | --- | --- |
 | Project identity, tech stack, module structure | `index/project-profile.md` |
-| Task-to-context routing | `index/routing.md` |
-| Injection priority and intensity | `index/priority.md` |
+| Task / phase / module / tech-domain context routing | `index/routing.md` |
+| Injection priority, intensity, conflict resolution | `index/priority.md` |
 | Module-to-spec mapping | `index/module-map.md` |
 | Architecture constraints, boundaries, ownership | `rules/architecture.md` |
 | Coding standards, conventions | `rules/coding.md` |
