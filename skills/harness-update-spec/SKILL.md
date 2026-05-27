@@ -73,6 +73,7 @@ When updating:
 3. Keep internal references inside `.harness/` consistent after edits.
 4. If `README.md` deviates from the harness-init bundled template, regenerate it to match.
 5. Re-run a quick file list check to ensure the directory remains coherent.
+6. When creating any file under `memory/` for the first time: if `memory/index.md` does not exist, create it first as a lightweight index of all memory files. If `memory/` already exists but `index.md` is missing, treat it as a missing file and create it.
 
 ## Language
 
