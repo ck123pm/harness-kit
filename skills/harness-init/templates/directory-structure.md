@@ -31,7 +31,7 @@ The `.harness/` directory uses a category-based layout. Reference files below ar
 │   ├── patterns.md
 │   └── lessons.md
 └── wiki/                # always create as HTML via templates/wiki/
-    ├── overview/
+    ├── index.html       # always create: root entry point (GitLab Pages home)
     ├── architecture/
     ├── business/
     ├── onboarding/
