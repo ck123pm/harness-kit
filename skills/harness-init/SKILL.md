@@ -10,7 +10,7 @@ description: Initialize a project's .harness/ directory by exploring the real co
 1. Do not record what the AI can cheaply derive from source code.
 2. Split expensive-to-derive knowledge by type and place it in the right file.
 3. Put design decisions, historical reasons, and tradeoffs into `decisions/`.
-4. Put human-oriented docs in `wiki/` — write Markdown in `templates/wiki/`, convert to HTML with `md-to-html-doc`, place HTML in `.harness/wiki/`, remove Markdown source if workflow requires HTML only.
+4. Put human-oriented docs in `wiki/` — write Markdown in `templates/wiki/`, convert to HTML with `md-to-html-doc`, place HTML in `.harness/wiki/`, remove Markdown source if workflow requires HTML only. `templates/wiki/README.md` is AI guidance, not a document to generate — never copy or convert it.
 5. Never fabricate content that is not supported by the actual repository state.
 
 ## Directory Structure
