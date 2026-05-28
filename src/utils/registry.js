@@ -147,10 +147,28 @@ export async function installGlobalPackage(packageName) {
 }
 
 export async function getPackageVersion() {
+  const pkg = await readPackageJson();
+  return pkg?.version ?? 'unknown';
+}
+
+export async function readPackageJson() {
   const pkgPath = path.join(PACKAGE_ROOT, 'package.json');
   if (await fs.pathExists(pkgPath)) {
-    const pkg = await fs.readJson(pkgPath);
-    return pkg.version;
+    return await fs.readJson(pkgPath);
   }
-  return 'unknown';
+  return null;
+}
+
+export async function getDeclaredPackageSpec(packageName) {
+  const pkg = await readPackageJson();
+  if (!pkg) {
+    return packageName;
+  }
+
+  const spec =
+    pkg.dependencies?.[packageName]
+    ?? pkg.peerDependencies?.[packageName]
+    ?? pkg.optionalDependencies?.[packageName];
+
+  return spec ? `${packageName}@${spec}` : packageName;
 }

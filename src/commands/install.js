@@ -7,6 +7,7 @@ import {
   FILE_MAPPINGS,
   copyFileRecord,
   detectGlobalCommand,
+  getDeclaredPackageSpec,
   installGlobalPackage,
   writeRecord,
   getPackageVersion,
@@ -42,14 +43,15 @@ export default async function installAction(options) {
   // Step 3: Check/install comet
   let cometResult;
   if (!skipComet) {
+    const cometPackageSpec = await getDeclaredPackageSpec('@ck123pm/comet');
     console.log(chalk.bold('\nChecking comet:'));
     cometResult = await detectGlobalCommand('comet');
     if (cometResult.available) {
       console.log(chalk.green(`  ✓ comet ${cometResult.version}`));
     } else {
-      console.log(chalk.yellow('  ! comet not found, installing @ck123pm/comet...'));
+      console.log(chalk.yellow(`  ! comet not found, installing ${cometPackageSpec}...`));
       try {
-        await installGlobalPackage('@ck123pm/comet');
+        await installGlobalPackage(cometPackageSpec);
         const afterInstall = await detectGlobalCommand('comet');
         cometResult = afterInstall;
         if (afterInstall.available) {
@@ -59,7 +61,7 @@ export default async function installAction(options) {
         }
       } catch (err) {
         console.log(chalk.red(`  ✗ Failed to install comet: ${err.message}`));
-        console.log(chalk.yellow('  Try: npm install -g @ck123pm/comet'));
+        console.log(chalk.yellow(`  Try: npm install -g ${cometPackageSpec}`));
       }
     }
   }
@@ -67,14 +69,15 @@ export default async function installAction(options) {
   // Step 4: Check/install openspec
   let openspecResult;
   if (!skipOpenspec) {
+    const openspecPackageSpec = await getDeclaredPackageSpec('@fission-ai/openspec');
     console.log(chalk.bold('\nChecking openspec:'));
     openspecResult = await detectGlobalCommand('openspec');
     if (openspecResult.available) {
       console.log(chalk.green(`  ✓ openspec ${openspecResult.version}`));
     } else {
-      console.log(chalk.yellow('  ! openspec not found, installing @fission-ai/openspec...'));
+      console.log(chalk.yellow(`  ! openspec not found, installing ${openspecPackageSpec}...`));
       try {
-        await installGlobalPackage('@fission-ai/openspec');
+        await installGlobalPackage(openspecPackageSpec);
         const afterInstall = await detectGlobalCommand('openspec');
         openspecResult = afterInstall;
         if (afterInstall.available) {
@@ -84,7 +87,7 @@ export default async function installAction(options) {
         }
       } catch (err) {
         console.log(chalk.red(`  ✗ Failed to install openspec: ${err.message}`));
-        console.log(chalk.yellow('  Try: npm install -g @fission-ai/openspec'));
+        console.log(chalk.yellow(`  Try: npm install -g ${openspecPackageSpec}`));
       }
     }
   }
