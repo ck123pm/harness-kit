@@ -1,11 +1,13 @@
 ---
 name: harness-update-spec
-description: Analyze and incrementally update an existing project's .harness/ specs against the current codebase. Use when the codebase has changed and .harness/ content may be stale, or when the user wants to check spec freshness.
+description: Analyze and incrementally update an existing project's .harness/ specs against the current codebase. Use when the codebase has changed and .harness/ content may be stale, or when the user wants to check spec freshness. Also invoked by harness-init when user chooses incremental update mode.
 ---
 
 # Harness Update Spec
 
-Use this skill when the user wants to inspect whether an existing `.harness/` directory is stale and update it incrementally.
+Use this skill when:
+- The user wants to inspect whether an existing `.harness/` directory is stale and update it incrementally
+- The `harness-init` skill detects an existing `.harness/` and the user chooses incremental update mode
 
 ## Core Principles
 

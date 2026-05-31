@@ -17,12 +17,17 @@ program
   .command('install')
   .description('Install harness skills into Claude')
   .option('--scope <scope>', 'Installation scope: global or local', 'global')
+  .option('--mode <mode>', 'Install mode: overwrite, incremental, or skip', 'overwrite')
   .option('--skip-comet', 'Skip @ck123pm/comet installation')
   .option('--skip-openspec', 'Skip @fission-ai/openspec installation')
-  .option('--force', 'Overwrite existing files')
+  .option('--force', 'Overwrite existing files (alias for --mode overwrite)')
   .action(async (options) => {
     if (!['global', 'local'].includes(options.scope)) {
       console.error('Error: --scope must be "global" or "local"');
+      process.exit(1);
+    }
+    if (!['overwrite', 'incremental', 'skip'].includes(options.mode)) {
+      console.error('Error: --mode must be "overwrite", "incremental", or "skip"');
       process.exit(1);
     }
     const { default: action } = await import('./commands/install.js');
