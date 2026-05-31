@@ -100,16 +100,44 @@ export async function writeRecord(record, scope = 'global') {
   await fs.writeJson(recordPath, record, { spaces: 2 });
 }
 
-export async function copyFileRecord(sourceRel, targetRel, { force = false, scope = 'global' } = {}) {
+async function promptFileChoice(targetRel) {
+  const readline = await import('node:readline');
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const answer = await new Promise(resolve => {
+    rl.question(chalk.cyan(`  ${targetRel} has changed. Overwrite? [y/N] `), resolve);
+  });
+  rl.close();
+  return answer.toLowerCase().startsWith('y');
+}
+
+export async function copyFileRecord(sourceRel, targetRel, { force = false, mode = 'overwrite', scope = 'global' } = {}) {
+  // --force implies overwrite regardless of mode
+  if (force) mode = 'overwrite';
+
   const src = resolveSourcePath(sourceRel);
   const tgt = resolveTargetPath(targetRel, scope);
+  const exists = await fs.pathExists(tgt);
 
-  if (!force && await fs.pathExists(tgt)) {
+  if (exists) {
     const existingHash = await hashFile(tgt);
     const sourceHash = await hashFile(src);
+
     if (existingHash === sourceHash) {
       return { target: tgt, didUpdate: false, reason: 'already-up-to-date' };
     }
+
+    // File exists and hashes differ — behavior depends on mode
+    if (mode === 'skip') {
+      return { target: tgt, didUpdate: false, reason: 'skipped', existingHash };
+    }
+
+    if (mode === 'incremental') {
+      const proceed = await promptFileChoice(targetRel);
+      if (!proceed) {
+        return { target: tgt, didUpdate: false, reason: 'skipped-by-user', existingHash };
+      }
+    }
+    // mode === 'overwrite' falls through to copy below
   }
 
   const claudeDir = resolveClaudeConfigDir({ scope });
@@ -172,3 +200,4 @@ export async function getDeclaredPackageSpec(packageName) {
 
   return spec ? `${packageName}@${spec}` : packageName;
 }
+

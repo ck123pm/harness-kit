@@ -14,9 +14,10 @@ import {
 } from '../utils/registry.js';
 
 export default async function installAction(options) {
-  const { scope = 'global', skipComet = false, skipOpenspec = false, force = false } = options;
+  const { scope = 'global', skipComet = false, skipOpenspec = false, force = false, mode = 'overwrite' } = options;
 
-  console.log(chalk.bold('\n🔧 harness-kit install\n'));
+  console.log(chalk.bold('\n🔧 harness-kit install'));
+  console.log(chalk.cyan(`  Mode: ${mode}\n`));
 
   // Step 1: Resolve and ensure dirs
   const claudeDir = resolveClaudeConfigDir({ scope });
@@ -30,11 +31,15 @@ export default async function installAction(options) {
   const fileResults = [];
 
   for (const mapping of FILE_MAPPINGS) {
-    const result = await copyFileRecord(mapping.source, mapping.target, { force, scope });
+    const result = await copyFileRecord(mapping.source, mapping.target, { force, mode, scope });
     fileResults.push({ ...result, source: mapping.source });
 
     if (result.didUpdate) {
       console.log(chalk.green(`  ✓ ${mapping.target}`));
+    } else if (result.reason === 'skipped') {
+      console.log(chalk.gray(`  - ${mapping.target} (skipped, existing preserved)`));
+    } else if (result.reason === 'skipped-by-user') {
+      console.log(chalk.yellow(`  ~ ${mapping.target} (skipped by user)`));
     } else {
       console.log(chalk.yellow(`  ~ ${mapping.target} (already up to date)`));
     }

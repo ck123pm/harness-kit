@@ -28,6 +28,29 @@ Follow the directory layout and content routing rules in `templates/directory-st
 
 Do not restructure the template or add arbitrary sections — the README is a structured index consumed by the comet injection system.
 
+## Existing .harness/ Detection
+
+Before starting exploration, check if `.harness/` already exists:
+
+**If `.harness/` does not exist**: Proceed with full exploration and generation (see Exploration Strategy below).
+
+**If `.harness/` exists**: List the existing files and ask the user to choose an update mode:
+
+1. **Full overwrite** (`overwrite`): Delete the existing `.harness/` directory and regenerate all files from scratch. Use this when the project structure has fundamentally changed or the existing specs are severely outdated.
+
+2. **Incremental update** (`incremental`): Scan the current codebase and compare with existing `.harness/` content. Update only files that have changed, add new files for newly discovered aspects, and preserve user-customized content. This follows the same analysis flow as the `harness-update-spec` skill.
+
+3. **Skip** (`skip`): Terminate without making any changes. Use this when you accidentally invoked the skill or want to keep the existing specs as-is.
+
+For incremental updates, follow these steps:
+- Read existing `.harness/` files and index their content
+- Re-scan the project (see Exploration Strategy)
+- Identify what changed: new modules, updated dependencies, architecture shifts, new patterns
+- Generate a change report showing which files will be updated and why
+- Ask the user to confirm before applying changes
+- Apply updates: modify changed sections, append to history-oriented files (memory/, decisions/), create new files as needed
+- Preserve user customizations unless they directly conflict with new findings
+
 ## Exploration Strategy
 Inspect the repository in three passes:
 
@@ -43,3 +66,4 @@ Determine output language before generating content:
 1. Check `CLAUDE.md` for a language preference — follow if present.
 2. Otherwise match the conversation language.
 3. All `.harness/` files use the same language consistently.
+
