@@ -1,0 +1,28 @@
+README.md
+  s_f0fe8dc766c702::t_839cd94e481d1d 98,101,103
+skills/harness-init/SKILL.md
+  s_f0fe8dc766c702::t_9e0137df58d469 20-29
+skills/harness-init/templates/directory-structure.md
+  s_f0fe8dc766c702::t_3e4beae10264f8 8,13,18,22,25,32,38,58-64
+  s_f0fe8dc766c702::t_e9c0ff7b10392c 14-17,20,26-29,47-55,69-76,78-79
+package.json
+  s_f0fe8dc766c702::t_66ded48b227f78 3
+skills/harness-update-spec/SKILL.md
+  s_f0fe8dc766c702::t_8d499c21d6e80b 48-56,63-70,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.10-trip",
+  "base_commit_sha": "48f2c2f366d54af54b21b52ae2b787133ff9f65e",
+  "prompts": {},
+  "sessions": {
+    "s_f0fe8dc766c702": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e8624-4319-7652-b6c9-30661ca75ea2",
+        "model": "gpt-5.5"
+      },
+      "human_author": "jianshuliu <530059628@qq.com>"
+    }
+  }
+}
