@@ -17,6 +17,16 @@ description: Initialize a project's .harness/ directory by exploring the real co
 
 Follow the directory layout and content routing rules in `templates/directory-structure.md`.
 
+When generating content, route by content type, not by topic name alone:
+
+- Put hard constraints in `rules/*-rules.md`: must / must not, invariants, forbidden dependencies, security constraints, non-negotiable testing gates, and rules whose violation creates risk.
+- Put execution guidance in `guides/*-guide.md`: how to implement correctly, commands to run, examples, workflows, local verification, migration steps, and troubleshooting paths.
+- For the same topic, split content when both kinds exist. For example, coding constraints go to `rules/coding-rules.md`; implementation style, local idioms, and examples go to `guides/coding-guide.md`.
+- Put business meaning, domain invariants, state transitions, magic values, and runtime semantics in `domain/`, not in `rules/` unless they are also engineering constraints the AI must enforce while editing code.
+- Put design rationale, rejected alternatives, and "why this cannot be changed casually" in `decisions/`.
+- Put historical pitfalls, regressions, reusable patterns, and lessons learned in `memory/`.
+- Put human-facing explanatory docs in `wiki/`; do not rely on `wiki/` for AI context because it is not injected by default.
+
 ## README Template
 
 `.harness/README.md` must follow the template bundled at `templates/harness-readme.md` in this skill. Fill in all `<!-- -->` placeholders based on actual project state:
@@ -66,4 +76,3 @@ Determine output language before generating content:
 1. Check `CLAUDE.md` for a language preference — follow if present.
 2. Otherwise match the conversation language.
 3. All `.harness/` files use the same language consistently.
-

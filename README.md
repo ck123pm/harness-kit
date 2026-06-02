@@ -95,12 +95,12 @@ Converts Markdown architecture and guide documents into responsive HTML output.
 .harness/
 ├── README.md
 ├── index/
-├── rules/
+├── rules/       # hard constraints, generated as *-rules.md
 ├── domain/
 ├── decisions/
-├── guides/
+├── guides/      # execution guides, generated as *-guide.md when topic-specific
 ├── memory/
-└── human-docs/
+└── wiki/
 ```
 
 ## Requirements

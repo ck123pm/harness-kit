@@ -45,15 +45,31 @@ Prefer CodeGraph when it is available.
 
 Map detected changes to spec targets. These are reference mappings — create new files when the change doesn't fit an existing one.
 
+Route by content type before choosing the filename:
+
+- Hard constraints, invariants, forbidden patterns, and non-negotiable gates go to `rules/*-rules.md`.
+- How-to guidance, commands, examples, workflows, and troubleshooting go to `guides/*-guide.md` or the existing topic guide.
+- Domain meaning, business semantics, state transitions, magic values, and runtime rules go to `domain/`.
+- Design rationale and tradeoffs go to `decisions/`.
+- Historical pitfalls, regressions, reusable patterns, and lessons go to `memory/`.
+- Human-facing docs go to `wiki/`; do not depend on `wiki/` for AI context injection.
+
 | Change type | Likely spec target |
 | --- | --- |
 | Dependency or runtime identity changes | `index/project-profile.md` |
 | Module structure changes | `index/module-map.md` |
 | New services, consumers, producers, RPC or message flows | `guides/backend.md` |
 | New runtime semantics or state machines | `domain/runtime-semantics.md` |
-| Architecture boundary changes | `rules/architecture.md` |
+| Architecture boundary constraints or forbidden dependencies | `rules/architecture-rules.md` |
+| Architecture implementation workflow or module addition steps | `guides/architecture-guide.md` |
+| Mandatory coding conventions or prohibited patterns | `rules/coding-rules.md` |
+| Coding workflow, local idioms, examples | `guides/coding-guide.md` |
+| Required test gates or coverage rules | `rules/testing-rules.md` |
+| Test commands, fixture setup, verification workflow | `guides/testing-guide.md` |
+| Security constraints or secret-handling rules | `rules/security-rules.md` |
+| Security review workflow or safe integration steps | `guides/security-guide.md` |
 | New design tradeoffs or ADR-worthy decisions | `decisions/tradeoffs.md` or `decisions/adr/` |
-| New domain terms or business rules | `domain/glossary.md`, `domain/business-rules.md` |
+| New domain terms or business semantics | `domain/glossary.md`, `domain/business-semantics.md` |
 | New pitfalls, regressions, or reusable patterns | `memory/` |
 
 ### 4. Report proposed updates
