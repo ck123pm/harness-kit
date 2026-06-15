@@ -38,6 +38,44 @@ export function resolveTargetPath(relativeTarget, scope = 'global') {
   return path.join(claudeDir, relativeTarget);
 }
 
+async function getPathKind(targetPath, { noFollow = false } = {}) {
+  const stat = noFollow ? await fs.lstat(targetPath) : await fs.stat(targetPath);
+
+  if (stat.isSymbolicLink()) {
+    return 'symlink';
+  }
+  if (stat.isDirectory()) {
+    return 'dir';
+  }
+  if (stat.isFile()) {
+    return 'file';
+  }
+  return 'other';
+}
+
+export async function prepareTargetForCopy(sourcePath, targetPath) {
+  if (!await fs.pathExists(targetPath)) {
+    return false;
+  }
+
+  const [sourceKind, targetKind] = await Promise.all([
+    getPathKind(sourcePath),
+    getPathKind(targetPath, { noFollow: true }),
+  ]);
+
+  if (targetKind === 'symlink') {
+    await fs.remove(targetPath);
+    return true;
+  }
+
+  if (sourceKind === targetKind) {
+    return false;
+  }
+
+  await fs.remove(targetPath);
+  return true;
+}
+
 export async function hashFile(filePath) {
   const stat = await fs.stat(filePath);
 
@@ -148,6 +186,7 @@ export async function copyFileRecord(sourceRel, targetRel, { force = false, mode
 
   const claudeDir = resolveClaudeConfigDir({ scope });
   await ensureClaudeDirs(claudeDir);
+  await prepareTargetForCopy(src, tgt);
   await fs.copy(src, tgt, { overwrite: true });
   const hash = await hashFile(tgt);
 

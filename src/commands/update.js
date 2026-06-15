@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import {
   FILE_MAPPINGS,
   LEGACY_FILE_MAPPINGS,
+  prepareTargetForCopy,
   resolveSourcePath,
   resolveTargetPath,
   hashFile,
@@ -118,7 +119,9 @@ export default async function updateAction(options) {
 
   console.log();
   for (const update of updates) {
-    await fs.copy(resolveSourcePath(update.source), update.target, { overwrite: true });
+    const sourcePath = resolveSourcePath(update.source);
+    await prepareTargetForCopy(sourcePath, update.target);
+    await fs.copy(sourcePath, update.target, { overwrite: true });
     const newHash = await hashFile(update.target);
     const recordEntry = (record.files ?? []).find(file => file.source === update.source);
     const legacyRecordEntry = (record.files ?? []).find(file => LEGACY_SOURCE_REMAP.get(file.source) === update.source);

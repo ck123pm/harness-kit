@@ -1,6 +1,6 @@
 {
   "name": "@ck123pm/harness-kit",
-  "version": "0.1.15",
+  "version": "0.1.17",
   "description": "CLI for installing and managing Claude Code harness capabilities",
   "type": "module",
   "bin": {
