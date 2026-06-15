@@ -18,7 +18,13 @@ export const FILE_MAPPINGS = [
     target: 'skills/harness-update-spec',
   },
   {
-    source: 'skills/md-to-html-doc.md',
+    source: 'skills/md-to-html-doc',
+    target: 'skills/md-to-html-doc',
+  },
+];
+
+export const LEGACY_FILE_MAPPINGS = [
+  {
     target: 'skills/md-to-html-doc.md',
   },
 ];
@@ -200,4 +206,3 @@ export async function getDeclaredPackageSpec(packageName) {
 
   return spec ? `${packageName}@${spec}` : packageName;
 }
-

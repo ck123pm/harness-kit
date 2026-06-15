@@ -87,7 +87,7 @@ Compares the current codebase against the existing `.harness/` specs and propose
 
 ### `md-to-html-doc`
 
-Converts Markdown architecture and guide documents into responsive HTML output.
+Converts Markdown architecture and guide documents into responsive HTML output. It is installed as a directory skill at `skills/md-to-html-doc/SKILL.md`.
 
 ## Expected `.harness/` Structure
 

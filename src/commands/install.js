@@ -1,16 +1,19 @@
 import chalk from 'chalk';
+import fs from 'fs-extra';
 import {
   resolveClaudeConfigDir,
   ensureClaudeDirs,
 } from '../utils/platform.js';
 import {
   FILE_MAPPINGS,
+  LEGACY_FILE_MAPPINGS,
   copyFileRecord,
   detectGlobalCommand,
   getDeclaredPackageSpec,
   installGlobalPackage,
   writeRecord,
   getPackageVersion,
+  resolveTargetPath,
 } from '../utils/registry.js';
 
 export default async function installAction(options) {
@@ -42,6 +45,14 @@ export default async function installAction(options) {
       console.log(chalk.yellow(`  ~ ${mapping.target} (skipped by user)`));
     } else {
       console.log(chalk.yellow(`  ~ ${mapping.target} (already up to date)`));
+    }
+  }
+
+  for (const legacyMapping of LEGACY_FILE_MAPPINGS) {
+    const legacyTarget = resolveTargetPath(legacyMapping.target, scope);
+    if (await fs.pathExists(legacyTarget)) {
+      await fs.remove(legacyTarget);
+      console.log(chalk.gray(`  - removed legacy ${legacyMapping.target}`));
     }
   }
 

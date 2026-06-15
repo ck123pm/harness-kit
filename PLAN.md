@@ -8,7 +8,7 @@ Installed artifacts:
 
 - `skills/harness-init/SKILL.md`
 - `skills/harness-update-spec/SKILL.md`
-- `skills/md-to-html-doc.md`
+- `skills/md-to-html-doc/SKILL.md`
 
 ## Intended Workflow
 
@@ -25,5 +25,5 @@ Installed artifacts:
 
 ## Notes
 
-- `harness-init` and `harness-update-spec` are directory-based skills.
+- `harness-init`, `harness-update-spec`, and `md-to-html-doc` are directory-based skills.
 - The install/update record logic must support hashing whole directories, not only single files.

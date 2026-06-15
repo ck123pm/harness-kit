@@ -5,6 +5,7 @@ import {
   resolveTargetPath,
   detectGlobalCommand,
   getRecordPath,
+  LEGACY_FILE_MAPPINGS,
 } from '../utils/registry.js';
 
 export default async function doctorAction() {
@@ -30,18 +31,29 @@ export default async function doctorAction() {
 
   // Check 2: Claude skill md-to-html-doc (check both scopes)
   let skillPath = null;
-  const globalSkill = resolveTargetPath('skills/md-to-html-doc.md', 'global');
-  const localSkill = resolveTargetPath('skills/md-to-html-doc.md', 'local');
+  let legacySkillPath = null;
+  const globalSkill = resolveTargetPath('skills/md-to-html-doc/SKILL.md', 'global');
+  const localSkill = resolveTargetPath('skills/md-to-html-doc/SKILL.md', 'local');
+  const globalLegacySkill = resolveTargetPath(LEGACY_FILE_MAPPINGS[0].target, 'global');
+  const localLegacySkill = resolveTargetPath(LEGACY_FILE_MAPPINGS[0].target, 'local');
   if (await fs.pathExists(globalSkill)) {
     skillPath = globalSkill;
   } else if (await fs.pathExists(localSkill)) {
     skillPath = localSkill;
+  } else if (await fs.pathExists(globalLegacySkill)) {
+    legacySkillPath = globalLegacySkill;
+  } else if (await fs.pathExists(localLegacySkill)) {
+    legacySkillPath = localLegacySkill;
   }
   checks.push({
     label: 'Claude skill md-to-html-doc',
     status: skillPath ? 'ok' : 'fail',
-    detail: skillPath ? `Found at ${skillPath}` : 'Not installed',
-    fix: 'Run: harness-kit install',
+    detail: skillPath
+      ? `Found at ${skillPath}`
+      : legacySkillPath
+        ? `Legacy single-file install found at ${legacySkillPath}`
+        : 'Not installed',
+    fix: legacySkillPath ? 'Run: harness-kit update or harness-kit install --force' : 'Run: harness-kit install',
   });
 
   // Check 3: Claude skill harness-update-spec (check both scopes)
